@@ -1,5 +1,4 @@
-/* line 17
-// # async functions
+# async functions
 // this is a simple straight forward and shorter way of writing promises.
 // async functions automatically return a promise
 async function upload(data) {
@@ -7,17 +6,15 @@ async function upload(data) {
     if(internetSpeed  > 5) {
         return "successfull";
     } else {
-        throw "failure";
+        throw "failure"; // throw is when rejected, in that case error is thrown.
     }
 } 
 
-upload("I can achieve anything with patience and consistency").then((pass) => {
-    console.log(pass, ":uploaded"); // output - successfull :uploaded
-}).catch((fail) => console.log(fail, ":not uploaded")); // output - failure :not uploaded
-*/
+upload("I can achieve anything with patience and consistency").then((result) => {
+    console.log(result, ":uploaded"); // output - successfull :uploaded
+}).catch((error) => console.log(error, ":not uploaded")); // output - failure :not uploaded
 
-/* line 28
-// # async arrow functon
+# async arrow functon
 let openPage = async (params) => {
     throw "404 not found";
 } 
@@ -25,12 +22,11 @@ let openPage = async (params) => {
 openPage("I need to persistent to achieve my dreams and goals.").catch((err) => {
     console.log("Error is:", err); // output- Error is: 404 not found
 });
-*/
 
-/* line 52
-// # await function
+# await function
 // await function holdes stops the code from running 
 // until a particular piece of code is either resolved or rejected
+// NOTE: await can only be used in an async function.
 
 // let us create an asynchronous function to demonstrate:
 function doSomething() {
@@ -49,10 +45,8 @@ async function myFunc() {
 }
 
 myFunc();
-*/
 
-/* line 83
-// # handling rejections in await using try and catch;
+# handling rejections in await using try and catch;
 function execute() {
     return new Promise((resolved, rejected) => {
         setTimeout(() => {
@@ -80,7 +74,5 @@ async function setter() {
 }
 
 setter();
-*/
 
-// # api in JS
-// api stands for application programming interface.
+    
