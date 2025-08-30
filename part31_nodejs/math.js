@@ -17,5 +17,6 @@ console.log(myObj);
 module.exports = myObj;
 */
 
-export const sum = (a, b) => a + b;
-export const div = (a, b) => a / b;
+const sum = (a, b) => a + b;
+const div = (a, b) => a / b;
+export let stuff = [sum, div]
