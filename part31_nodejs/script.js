@@ -14,3 +14,5 @@ console.log(mathData);
 */ 
 
 
+import {sum, div} from "./math.js"
+console.log(sum(2, 4));

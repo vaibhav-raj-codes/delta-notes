@@ -144,3 +144,21 @@ It is like a library of packages
 
 # Installing packages using npm
 npm install <- package name ->
+
+# using import export instead of require
+math.js -> 
+export const sum = (a, b) => a + b;
+export const div = (a, b) => a / b;
+// need to use export to send anything
+
+script.js ->
+import {sum, div} from "./math.js";
+console.log(sum(3, 5));
+// now we import it
+
+step 3: create an empty npm package.json file using npm init inside directory with above 2 files
+
+step 4: add a line "type": "module" inside package.json
+
+step 5: now we can run script.js and access math.js from script.js
+
