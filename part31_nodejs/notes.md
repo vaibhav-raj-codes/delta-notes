@@ -162,3 +162,7 @@ step 4: add a line "type": "module" inside package.json
 
 step 5: now we can run script.js and access math.js from script.js
 
+# import vs require
+we can select what to import but we need to bring everything with require
+
+loading in import can be asynchronous while require is synchronous
