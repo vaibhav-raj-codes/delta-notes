@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram-page</title>
+    <style>
+        img {
+            max-width: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>This account belongs to @<%= data.name %>
+    </h1>
+    <button>follow</button>
+    <button>Message</button>
+    <p>followers: <%= data.followers %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; following: <%= data.following %>
+    </p>
+    <hr />
+    <% for (const post of data.posts) { %>
+        <img width="auto" height="400px" src="<%= post.image %>" alt="posts">
+        <p>likes: <%= post.likes %>&nbsp;&nbsp;&nbsp;&nbsp;comments: <%= post.comments %></p>
+        <br>
+        <% } %>
+    <%- include("./extra.ejs") %>
+</body>
+
+</html>
