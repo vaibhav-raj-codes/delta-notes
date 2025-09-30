@@ -1,0 +1,23 @@
+body {
+    background-color: #181818;
+    color: azure;
+    margin: 30px;
+}
+
+h1 {
+    color: #f52936;
+}
+
+.post {
+    background-color: #ffffff0d;
+    padding: 20px;
+    margin: 10px auto;
+    border-radius: 20px;
+}
+.username {
+    color: #ffffff;
+}
+
+.content {
+    color: #e6e7e8;
+}
