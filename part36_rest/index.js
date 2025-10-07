@@ -72,6 +72,14 @@ app.patch('/posts/:id', (req, res) => {
     res.send('patch request working');
 })
 
+// code to edit a post's content, GET /posts/:id/edit
+app.get('/posts/:id/edit', (req, res) => {
+    let { id } = req.params;
+    console.log(id);
+    let post = posts.find((temp) => id === temp.id);
+    res.render('edit', { post });
+})
+
 // app listening at port
 app.listen(port, () => {
     console.log(`Listening on localhost:${port}`);
