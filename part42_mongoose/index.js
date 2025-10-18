@@ -1,18 +1,30 @@
 const mongoose = require('mongoose');
-const { use } = require('react');
 
-main().then((res) => console.log(`Connection Successful`))
-.catch((err) => console.log(err)); 
-// running the main() function and checking for errors or results.
+main()
+    .then(res => console.log("connection successful"))
+    .catch(err => console.log(err));
 
 async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/test');
 }
 
-const userSchema = new mongoose.Schema({
+// making my own schema
+const employeeSchema = new mongoose.Schema({
     name: String,
-    cgpa: Number,
-    branch: String,
+    work_experience: [{ body: String, date: Date }],
+    extras: {
+        hobbies: String,
+        salary: Number
+    }
 });
 
-const Student = mongoose.model("Student", userSchema); 
+
+
+const Employee = mongoose.model("Employee", employeeSchema)
+
+async function doit(){
+     const found = await Employee.deleteMany({name: 'chaitanya'})
+    console.log("deleted:", found)
+}
+
+Module.findByIdAndUpdate("myid", {type: Number}, {runValidators: true})

@@ -1,4 +1,4 @@
-# starting mongo shell:  
+# *`starting mongo shell:`*  
 bash:  
 mongosh  
 
@@ -41,6 +41,8 @@ note: when we create a mongo document it also creates a unique id which is prima
 show collections // shows all collections  
 
 db.student.insertOne({name: 'adam',marks: 79}) // added this document  
+note: This also auto added a collection called student in current dbs
+
 db.person.insertMany([
     {name: 'adam',age: 19},
     {name: 'bob',age: 79},
@@ -54,14 +56,14 @@ db.student.findOne({key: value}) // find one key that matches first. It returns 
 
 # Query Operators:
 greater than: $gt  
-ex: db.student.find( {marks: {gt: 75}})  
+ex: db.student.find( {marks: {$gt: 75}})  
 // find students with marks of over 75  
 
 Inside a condition: $in  
 ex: db.student.find( {city: {$in: ['delhi', 'mumbai']}})
 
 Or operator: $or  
-ex: db.student.find({city: {$or: ['delhi', 'chennai']}})  
+ex: db.student.find({$or: [{name: 'sunil'},{name: 'bob'}]})
 
 [more reading](https://www.w3schools.com/mongodb/mongodb_query_operators.php)
 
