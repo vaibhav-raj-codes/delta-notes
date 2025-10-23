@@ -12,8 +12,8 @@ async function main() {
 
 // all chat route or main page
 app.get('/chats', async (req, res) => {
-    let myChats =  await chat.find(); 
-    res.render('index', {myChats})
+    let myChats = await chat.find();
+    res.render('index', { myChats })
 });
 
 // get the forms route
@@ -26,7 +26,7 @@ app.post('/chats', (req, res) => {
     let { from, to, msg } = req.body;
     let newChat = new chat({
         from: from,
-        to: to, 
+        to: to,
         msg: msg,
         created_at: new Date()
     })
@@ -36,19 +36,40 @@ app.post('/chats', (req, res) => {
 
 // Edit route:
 app.get('/chats/:id/edit', async (req, res) => {
-    let {id} = req.params;
+    let { id } = req.params;
     let Chat = await chat.findById(id);
     res.render('edit.ejs', { Chat });
 });
 
-app.put('/chats/:id', (req, res) => {
-    let { id, msg } = req.body;
-    chat.findByIdAndUpdate({id}, {msg}).then(console.log("successfully updated")).catch(err => console.log(err));
+// update route
+app.put('/chats/:id', async (req, res) => {
+    try {
+        let { id } = req.params;
+        let { newMsg } = req.body;
+        let updatedValue = await chat.findByIdAndUpdate(id, { msg: newMsg }, { runValidators: true, new: true })
+        console.log(`updated value:\n${updatedValue}`);
+    } catch (err) {
+        console.log(err)
+    }
+    res.redirect("/chats")
 })
 
-// index route
-app.get("/", (req, res) => {
-    res.render('index')
+// Delete route
+app.delete('/chats/:id', async (req, res) => {
+    try {
+        let { id } = req.params;
+        let deletedValue = await chat.findByIdAndDelete(id);
+        console.log(deletedValue);
+    } catch(err) {
+        console.log(err);
+    }
+    res.redirect('/chats');
+})
+
+// Index route
+app.get('/', async (req, res) => {
+    let myChats = await chat.find();
+    res.render('index', { myChats })
 });
 
 app.listen(port, () => {
