@@ -48,9 +48,11 @@ app.put('/chats/:id', (req, res) => {
 
 // index route
 app.get("/", (req, res) => {
-    res.render('index')
+    res.render('index');
 });
 
 app.listen(port, () => {
     console.log(`Listening on http://localhost:${port}`);
 });
+
+// monkeytype is pretty fast you know

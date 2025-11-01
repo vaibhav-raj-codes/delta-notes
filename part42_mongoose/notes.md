@@ -71,7 +71,7 @@ await Employee.create({name: 'bobby deol', age: 45})
 // this will still use the employeeSchema schematics
 ```
 
-# Creating / Inserting documents in mongoose:
+# **`Creating / Inserting documents in mongoose:`**
 ## Method 1: Inserting by making an object which is instance of Model and then saving it in database:
 ```js
 const Employee = mongoose.model("Employee", employeeSchema)
