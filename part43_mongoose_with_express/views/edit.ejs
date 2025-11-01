@@ -10,8 +10,8 @@
 <body>
     <h3>Edit your chat: <%= Chat._id %></h3>
     <p>This message was sent from <%= Chat.from %> to <%= Chat.to %> on <%= Chat.created_at.toString().split(" ")[1] %> <%= Chat.created_at.toString().split(" ")[2] %> <%= Chat.created_at.toString().split(" ")[3] %> (<%= Chat.created_at.toString().split(" ")[4] %>)</p>
-    <form class="d-inline-flex flex-column bd-highlight mb-3" action="/chats/<%= Chat._id %>" method="POST">
-        <textarea class="bg-dark bg-gradient" name="msg" id="message-area" rows="10" cols="50"><%= Chat.msg %></textarea>
+    <form class="d-inline-flex flex-column bd-highlight mb-3" action="/chats/<%= Chat._id %>?_method=PUT" method="POST">
+        <textarea class="bg-dark bg-gradient" name="newMsg" id="message-area" rows="10" cols="50"><%= Chat.msg %></textarea>
         <br>
         <button class="btn btn-outline-secondary">Submit</button>
     </form>

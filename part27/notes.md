@@ -1,10 +1,10 @@
-# function call stack
+# function call stack:
+Js stores it's function calls in a stack. where last in first out principle is used, which is very useful when debugging.  
+ 
+Note: We can observe the call stack contents using the sources panel in browser -> inspect mode. There we can set brake points and then refresh page to observe and debug.
 
-Js stores it's function calls in a stack. where last in first out principle is used. Very useful when debugging.
-
-Note: We can observe the call stack contents using the sources panel in browser inspect. There we can set brakepoints and then refresh page to observe and debug.
-
-# nesting of callbacks => also known as callback hell
+# nesting of callbacks => also known as callback hell:
+```js
 function changeColor(color, delay, nextCallback) {
     // this function changes the background color of our web page after each delay using function callback.
     setTimeout(() => {
@@ -22,8 +22,10 @@ changeColor("green", 2000, () => {
     })
 })
 // nesting of callbacks is a real challenge in programming.
+```
 
-# example of an asnchronous situation in javascript 
+# example of an asynchronous situation in javascript  
+```js 
 // our situation is asynchronous because our internet speed can vary our uploadData function speed. hence we use multiple callbacks which are nested. resulting in a callback hell.
 function uploadData(data, success, failure) {
     let internetSpeed = Math.floor(Math.random() * 10 + 1);
@@ -34,7 +36,7 @@ function uploadData(data, success, failure) {
     }
 }
 
-uploadData("I love coding", // arugment 1 i.e, data
+uploadData("I love coding", // argument 1 i.e, data
     () => { // argument 2 i.e, success
         console.log("Your data was successfully uploaded."); 
         // since our first data was successfully saved in here we can proceed to saving our next data.
@@ -52,19 +54,21 @@ uploadData("I love coding", // arugment 1 i.e, data
     }
 ); 
 // we are basically sending uploadData(data in string, success in arrow function, failure in arrow function);    
+```
 
 # promises in javascript
+```js
 function upload(data) { 
     return new Promise((resolve, reject) => {
         let internetSpeed = Math.floor(Math.random() * 10 + 1);
         if(internetSpeed > 5) {
-            resolve("sucessfully uploaded.");
+            resolve("successfully uploaded.");
         } else {
             reject("failed to upload.");
         }
     });
 }
 upload("uploading myData to cloud");
-// we can now tackle this asynchronous sitation much more easily.
-
+// we can now tackle this asynchronous situation much more easily.
+```
 
