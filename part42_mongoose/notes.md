@@ -28,7 +28,7 @@ Schema defines the shape of the documents within that collection.
 We can quickly make a overall structure for our collections like below:  
 ```js
 // making my own schema
-const teacher = new Schema({
+const teacherSchema = new Schema({
     name: String,
     work_experience: [{ body: String, date: Date }],
     extras: {
@@ -60,6 +60,8 @@ Model in mongoose is a class with which we construct documents.
 const Employee = mongoose.model("Employee", employeeSchema);  
 // this creates a collection called Employee that uses employeeSchema
 // we can do mongosh and bash 'use test' database and bash 'show collections' to see employees
+
+module.exports = Employee;
 ```
 
 note 1: even though we gave the collection the name Employee, mongodb automatically converts it into smaller case and plural i.e employees.  
@@ -223,6 +225,15 @@ const bookSchema = new mongoose.schema({
         min: [1, "price is too low"], // minimum is 1, if below that is set we throw our custom error in the array.
         default: 78
     },
+    image: {
+        type: String,
+        // sets a default link
+        default: 'https://eep.io/images/yzco4xsimv0y/3GEhO6QlJegaqWWOi80GoE/185e9e3e3a81515c18dab9c4491378ea/Campaigns-content-imagelink.png',
+        // set is for client side, it checks if link is empty, if yes then puts the default link, else it sets it to client entered link.
+        set: (link) => link === '' 
+            ? 'https://eep.io/images/yzco4xsimv0y/3GEhO6QlJegaqWWOi80GoE/185e9e3e3a81515c18dab9c4491378ea/Campaigns-content-imagelink.png' 
+            : link;
+    }
     genre: [String] // array of strings
 })
 ```
@@ -238,6 +249,7 @@ price: {
     min: [1, "can't set below 1"]
 }
 ```
+
 [more reading on schema types](https://mongoosejs.com/docs/schematypes.html#all-schema-types)
 
 ## Validation in update:
