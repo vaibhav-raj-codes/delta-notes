@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const listngSchema = new mongoose.Schema({
+const listingSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -24,5 +24,5 @@ const listngSchema = new mongoose.Schema({
     country: String,
 });
 
-const Listing = mongoose.model('Listing', listngSchema)
+const Listing = mongoose.model('Listing', listingSchema)
 module.exports = Listing;
