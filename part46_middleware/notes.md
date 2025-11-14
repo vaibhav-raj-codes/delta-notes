@@ -152,3 +152,21 @@ we can fix this using try catch whenever doing something asynchronous
         // we call next here with the err
     }
 ```
+
+
+# `Error handling with a custom asyncWrap function`:
+we can make a function asyncWrap and make it return a executable function or next(err) function.
+
+```js
+function asyncWrap(fn) {
+    return function(req, res, next) {
+        fn(req, res, next).catch((err) => next(err));
+    }
+}
+
+app.get('/api/chats/:id', asyncWrap(async (req, res, next) => {
+    let {id} = req.params;
+    let chat = await Chat.findById(id);
+    res.render(show.ejs, { chat })
+}))
+```

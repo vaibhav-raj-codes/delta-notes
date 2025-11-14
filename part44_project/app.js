@@ -2,11 +2,14 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const port = 8080;
-const listingDB = require('./models/listing.js');
 const path = require('path');
-const { execPath } = require('process');
 const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
+const wrapAsync = require('./utils/wrapAsync.js');
+const ExpressError = require('./utils/ExpressError.js');
+const listings = require('./routes/listing.js');
+const reviews = require('./routes/reviews.js');
+
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -21,59 +24,22 @@ async function main() {
     mongoose.connect("mongodb://127.0.0.1:27017/wanderlust");
 }
 
-// home or landing page
-app.get('/listings', async (req, res) => {
-    const fullData = await listingDB.find({});
-    res.render('listings/index.ejs', { list: fullData });
-});
-
-// Create route
-app.post('/listings', async (req, res) => {
-    const newListing = new listingDB(req.body.listing);
-    try {
-        await newListing.save();
-    } catch (err) {
-        console.log(err);
-    }
-    res.redirect('/listings');
-});
-
-app.get('/listings/new', (req, res) => {
-    res.render('listings/new.ejs');
-});
-
-// delete route:
-app.delete('/listings/:id', async (req, res) => {
-    const { id } = req.params;
-    await listingDB.findByIdAndDelete(id);
-    res.redirect('/listings');
-});
-
-// edit route: 
-app.get('/listings/:id/edit', async (req, res) => {
-    let { id } = req.params;
-    const fullData = await listingDB.findById(id);
-    res.render('listings/edit.ejs', { item: fullData });
-});
-
-// update route:
-app.put('/listings/:id', async (req, res) => {
-    let { id } = req.params;
-    const fullData = req.body.listing;
-    await listingDB.findByIdAndUpdate(id, {...fullData});
-    res.redirect(`/listings/${id}`);
-});
-
-// get id to display hotel info
-app.get('/listings/:id', async (req, res) => {
-    let { id } = req.params;
-    const fullData = await listingDB.findById(id);
-    res.render('listings/show.ejs', { item: fullData });
-});
+app.use('/listings', listings);
+app.use('/listings/:id/reviews', reviews);
 
 // redirect to home page
-app.get('/', async (req, res) => {
+app.get('/', wrapAsync( async (req, res) => {
     res.redirect('/listings');
+}));
+
+app.use((req, res, next) => {
+  next(new ExpressError(404, 'Page Not Found'));
+});
+
+app.use((err, req, res, next) => {
+    let { statusCode = 500, message = "something went wrong!" } = err;
+    res.status(statusCode).render("error.ejs", { message });
+    // res.status(statusCode).send(message);
 });
 
 app.listen(port, () => {
