@@ -26,6 +26,7 @@ router.get('/', async (req, res) => {
 router.post('/', validateListing, wrapAsync(async (req, res, next) => {
     const newListing = new listingDB(req.body.listing);
     await newListing.save();
+    req.flash('success', 'New listing created!');
     res.redirect('/listings');
 }));
 
@@ -37,6 +38,7 @@ router.get('/new', (req, res) => {
 router.delete('/:id', wrapAsync(async (req, res) => {
     const { id } = req.params;
     await listingDB.findByIdAndDelete(id);
+    req.flash('success', 'Listing deleted');
     res.redirect('/listings');
 }));
 
@@ -44,7 +46,12 @@ router.delete('/:id', wrapAsync(async (req, res) => {
 router.get('/:id/edit', wrapAsync(async (req, res) => {
     let { id } = req.params;
     const fullData = await listingDB.findById(id);
-    res.render('listings/edit.ejs', { item: fullData });
+    if (!fullData) {
+        req.flash("error", "Listing not found");
+        res.redirect('/listings');
+    } else {
+        res.render('listings/edit.ejs', { item: fullData });
+    }
 }));
 
 // update route:
@@ -52,6 +59,7 @@ router.put('/:id', validateListing, wrapAsync(async (req, res) => {
     let { id } = req.params;
     const fullData = req.body.listing;
     await listingDB.findByIdAndUpdate(id, { ...fullData });
+    req.flash('success', 'Listing updated!');
     res.redirect(`/listings/${id}`);
 }));
 
@@ -59,7 +67,12 @@ router.put('/:id', validateListing, wrapAsync(async (req, res) => {
 router.get('/:id', wrapAsync(async (req, res) => {
     let { id } = req.params;
     const fullData = await listingDB.findById(id).populate('reviews');
-    res.render('listings/show.ejs', { item: fullData });
+    if (!fullData) {
+        req.flash("error", "Listing not found");
+        res.redirect('/listings');
+    } else {
+        res.render('listings/show.ejs', { item: fullData });
+    }
 }));
 
 module.exports = router;

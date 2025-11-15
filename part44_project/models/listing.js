@@ -15,10 +15,10 @@ const listingSchema = new mongoose.Schema({
         },
         url: {
             type: String,
-            default: "https://unsplash.com/photos/a-house-with-a-lot-of-windows-with-the-lights-on-at-night-VqJUR1YDEK0",
+            default: "https://colormadehappy.com/wp-content/uploads/2023/10/How-to-Draw-a-House.jpg.webp",
             set: (v) => 
                 v === "" 
-                ? "https://unsplash.com/photos/a-house-with-a-lot-of-windows-with-the-lights-on-at-night-VqJUR1YDEK0" 
+                ? "https://colormadehappy.com/wp-content/uploads/2023/10/How-to-Draw-a-House.jpg.webp" 
                 : v
         },
     },
